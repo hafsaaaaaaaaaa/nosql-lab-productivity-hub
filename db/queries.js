@@ -20,8 +20,14 @@ async function listUserProjects(db, ownerId) {
 }
 
 async function createProject(db, projectData) {
-  // TODO: implement
-  throw new Error('createProject not implemented');
+  const result = await db.collection('projects').insertOne({
+    ownerId: projectData.ownerId,
+    name: projectData.name,
+    description: projectData.description || '',
+    archived: false,
+    createdAt: new Date()
+  });
+  return { insertedId: result.insertedId };
 }
 
 async function archiveProject(db, projectId) {
