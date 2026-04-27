@@ -91,8 +91,8 @@ async function toggleSubtask(db, taskId, subtaskTitle, newDone) {
 }
 
 async function deleteTask(db, taskId) {
-  // TODO: implement
-  throw new Error('deleteTask not implemented');
+  const result = await db.collection('tasks').deleteOne({ _id: taskId });
+  return { deletedCount: result.deletedCount };
 }
 
 async function searchNotes(db, ownerId, tags, projectId) {
