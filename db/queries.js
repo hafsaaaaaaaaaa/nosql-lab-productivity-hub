@@ -75,8 +75,11 @@ async function addTaskTag(db, taskId, tag) {
 }
 
 async function removeTaskTag(db, taskId, tag) {
-  // TODO: implement
-  throw new Error('removeTaskTag not implemented');
+  const result = await db.collection('tasks').updateOne(
+    { _id: taskId },
+    { $pull: { tags: tag } }
+  );
+  return { matchedCount: result.matchedCount, modifiedCount: result.modifiedCount };
 }
 
 async function toggleSubtask(db, taskId, subtaskTitle, newDone) {
